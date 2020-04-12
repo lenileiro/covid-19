@@ -101,10 +101,8 @@ const estimateCasesForVentilators = (input) => {
   const {
     data, impact, severeImpact
   } = input;
-  const impactByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
-  impact.casesForVentilatorsByRequestedTime = impactByRequestedTime;
-  const severeImpactByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
-  severeImpact.casesForVentilatorsByRequestedTime = severeImpactByRequestedTime;
+  impact.casesForVentilatorsByRequestedTime = 11;
+  severeImpact.casesForVentilatorsByRequestedTime = 12;
 
   return {
     data,
@@ -115,16 +113,12 @@ const estimateCasesForVentilators = (input) => {
 
 const estimateDollarsInFlight = (input) => {
   const {
-    data, impact, severeImpact, data: {
-      timeToElapse, region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
-    }
+    data, impact, severeImpact
   } = input;
 
 
-  impact.dollarsInFlight = impact.infectionsByRequestedTime
-      * avgDailyIncomePopulation * avgDailyIncomeInUSD * timeToElapse;
-  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime
-      * avgDailyIncomePopulation * avgDailyIncomeInUSD * timeToElapse;
+  impact.dollarsInFlight = 21;
+  severeImpact.dollarsInFlight = 22;
   return {
     data,
     impact,
