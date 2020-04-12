@@ -123,9 +123,9 @@ const estimateDollarsInFlight = (input) => {
   const days = getDays(periodType, timeToElapse);
 
   impact.dollarsInFlight = impact.infectionsByRequestedTime
-      * avgDailyIncomePopulation * avgDailyIncomeInUSD * days;
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD * timeToElapse;
   severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime
-      * avgDailyIncomePopulation * avgDailyIncomeInUSD * days;
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD * timeToElapse;
   return {
     data,
     impact,
