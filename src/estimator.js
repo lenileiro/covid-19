@@ -84,51 +84,51 @@ const estimateBedSpaceAvailability = (input) => {
 };
 
 const estimateCasesForICU = (input) => {
-    const {
-      data, impact, severeImpact
-    } = input;
-    impact.casesForICUByRequestedTime = 0.05 * impact.infectionsByRequestedTime;
-    severeImpact.casesForICUByRequestedTime = 0.05 * severeImpact.infectionsByRequestedTime;
-    return {
-      data,
-      impact,
-      severeImpact
-    };
+  const {
+    data, impact, severeImpact
+  } = input;
+  impact.casesForICUByRequestedTime = 0.05 * impact.infectionsByRequestedTime;
+  severeImpact.casesForICUByRequestedTime = 0.05 * severeImpact.infectionsByRequestedTime;
+  return {
+    data,
+    impact,
+    severeImpact
   };
+};
 
-  const estimateCasesForVentilators = (input) => {
-    const {
-      data, impact, severeImpact
-    } = input;
-    impact.casesForVentilatorsByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
-    severeImpact.casesForVentilatorsByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
-  
-    return {
-      data,
-      impact,
-      severeImpact
-    };
+const estimateCasesForVentilators = (input) => {
+  const {
+    data, impact, severeImpact
+  } = input;
+  impact.casesForVentilatorsByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
+  severeImpact.casesForVentilatorsByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
+
+  return {
+    data,
+    impact,
+    severeImpact
   };
-  
-  const estimateDollarsInFlight = (input) => {
-    const {
-      data, impact, severeImpact, data: {
-        periodType, timeToElapse, region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
-      }
-    } = input;
-  
-    const days = getDays(periodType, timeToElapse);
-  
-    impact.dollarsInFlight = impact.infectionsByRequestedTime
+};
+
+const estimateDollarsInFlight = (input) => {
+  const {
+    data, impact, severeImpact, data: {
+      periodType, timeToElapse, region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
+    }
+  } = input;
+
+  const days = getDays(periodType, timeToElapse);
+
+  impact.dollarsInFlight = impact.infectionsByRequestedTime
       * avgDailyIncomePopulation * avgDailyIncomeInUSD * days;
-    severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime
+  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime
       * avgDailyIncomePopulation * avgDailyIncomeInUSD * days;
-    return {
-      data,
-      impact,
-      severeImpact
-    };
+  return {
+    data,
+    impact,
+    severeImpact
   };
+};
 
 const covid19ImpactEstimator = (data) => {
   const estimator = chain(
