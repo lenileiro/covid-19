@@ -72,8 +72,9 @@ const estimateBedSpaceAvailability = (input) => {
   } = input;
 
   const availablebeds = 0.35 * totalHospitalBeds;
+  const hospitalBedsByRequestedTime = availablebeds - impact.severeCasesByRequestedTime;
+  impact.hospitalBedsByRequestedTime = Math.trunc(hospitalBedsByRequestedTime);
 
-  impact.hospitalBedsByRequestedTime = Math.trunc(availablebeds - impact.severeCasesByRequestedTime);
   const total = availablebeds - severeImpact.severeCasesByRequestedTime;
   severeImpact.hospitalBedsByRequestedTime = Math.trunc(total);
   return {
