@@ -101,12 +101,10 @@ const estimateCasesForVentilators = (input) => {
   const {
     data, impact, severeImpact
   } = input;
-  impact.casesForVentilatorsByRequestedTime = Math.trunc(
-    (0.02 * impact.infectionsByRequestedTime)
-  );
-  severeImpact.casesForVentilatorsByRequestedTime = Math.trunc(
-    (0.02 * severeImpact.infectionsByRequestedTime)
-  );
+  const impactByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
+  impact.casesForVentilatorsByRequestedTime = Math.trunc(impactByRequestedTime);
+  const severeImpactByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
+  severeImpact.casesForVentilatorsByRequestedTime = Math.trunc(severeImpactByRequestedTime);
 
   return {
     data,
