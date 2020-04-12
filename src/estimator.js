@@ -15,7 +15,7 @@ const getDays = (periodType, timeToElapse) => {
 
 const getTimeDuration = (periodType, timeToElapse) => {
   const days = getDays(periodType, timeToElapse);
-  const projected = (2 ** Math.floor(days / 3));
+  const projected = (2 ** (days / 3) >> 0);
   return projected;
 };
 
@@ -73,10 +73,10 @@ const estimateBedSpaceAvailability = (input) => {
 
   const availablebeds = 0.35 * totalHospitalBeds;
   const hospitalBedsByRequestedTime = availablebeds - impact.severeCasesByRequestedTime;
-  impact.hospitalBedsByRequestedTime = Math.trunc(hospitalBedsByRequestedTime);
+  impact.hospitalBedsByRequestedTime = hospitalBedsByRequestedTime >> 0;
 
   const total = availablebeds - severeImpact.severeCasesByRequestedTime;
-  severeImpact.hospitalBedsByRequestedTime = Math.trunc(total);
+  severeImpact.hospitalBedsByRequestedTime = total >> 0;
   return {
     data,
     impact,
@@ -102,9 +102,9 @@ const estimateCasesForVentilators = (input) => {
     data, impact, severeImpact
   } = input;
   const impactByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
-  impact.casesForVentilatorsByRequestedTime = impactByRequestedTime;
+  impact.casesForVentilatorsByRequestedTime = impactByRequestedTime >> 0;
   const severeImpactByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
-  severeImpact.casesForVentilatorsByRequestedTime = severeImpactByRequestedTime;
+  severeImpact.casesForVentilatorsByRequestedTime = severeImpactByRequestedTime >> 0;
 
   return {
     data,
