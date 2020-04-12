@@ -96,13 +96,20 @@ const estimateCasesForICU = (input) => {
     severeImpact
   };
 };
-
+const formatString = (float) => {
+  const n = float.toFixed(1).toString();
+  const m = n.substring(0, n.length - 2);
+  return parseInt(m, 10);
+};
 const estimateCasesForVentilators = (input) => {
   const {
     data, impact, severeImpact
   } = input;
-  impact.casesForVentilatorsByRequestedTime = 11;
-  severeImpact.casesForVentilatorsByRequestedTime = 12;
+
+  const impactByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
+  impact.casesForVentilatorsByRequestedTime = formatString(impactByRequestedTime);
+  const severeImpactByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
+  severeImpact.casesForVentilatorsByRequestedTime = formatString(severeImpactByRequestedTime);
 
   return {
     data,
@@ -113,12 +120,16 @@ const estimateCasesForVentilators = (input) => {
 
 const estimateDollarsInFlight = (input) => {
   const {
-    data, impact, severeImpact
+    data, impact, severeImpact, data: {
+      timeToElapse, region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
+    }
   } = input;
 
 
-  impact.dollarsInFlight = 21;
-  severeImpact.dollarsInFlight = 22;
+  impact.dollarsInFlight = impact.infectionsByRequestedTime
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD * timeToElapse;
+  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD * timeToElapse;
   return {
     data,
     impact,
