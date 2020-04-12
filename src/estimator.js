@@ -116,11 +116,10 @@ const estimateCasesForVentilators = (input) => {
 const estimateDollarsInFlight = (input) => {
   const {
     data, impact, severeImpact, data: {
-      periodType, timeToElapse, region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
+      timeToElapse, region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
     }
   } = input;
 
-  const days = getDays(periodType, timeToElapse);
 
   impact.dollarsInFlight = impact.infectionsByRequestedTime
       * avgDailyIncomePopulation * avgDailyIncomeInUSD * timeToElapse;
