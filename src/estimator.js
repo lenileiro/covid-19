@@ -124,8 +124,8 @@ const estimateDollarsInFlight = (input) => {
   } = input;
 
 
-  impact.dollarsInFlight = 21
-  severeImpact.dollarsInFlight = 22
+  impact.dollarsInFlight = 21;
+  severeImpact.dollarsInFlight = 22;
   return {
     data,
     impact,
