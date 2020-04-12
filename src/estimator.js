@@ -103,9 +103,29 @@ const estimateCasesForVentilators = (input) => {
   } = input;
   const impactByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
   impact.casesForVentilatorsByRequestedTime = Math.trunc(impactByRequestedTime);
-  //   const severeImpactByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
-  //   severeImpact.casesForVentilatorsByRequestedTime = severeImpactByRequestedTime;
+  const severeImpactByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
+  severeImpact.casesForVentilatorsByRequestedTime = Math.trunc(severeImpactByRequestedTime);
 
+  return {
+    data,
+    impact,
+    severeImpact
+  };
+};
+
+const estimateDollarsInFlight = (input) => {
+  const {
+    data, impact, severeImpact, data: {
+      periodType, timeToElapse, region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
+    }
+  } = input;
+
+  const days = getDays(periodType, timeToElapse);
+
+  impact.dollarsInFlight = impact.infectionsByRequestedTime
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD * days;
+  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD * days;
   return {
     data,
     impact,
@@ -126,7 +146,8 @@ const covid19ImpactEstimator = (data) => {
 
     // challenge 3
     estimateCasesForICU,
-    estimateCasesForVentilators
+    estimateCasesForVentilators,
+    estimateDollarsInFlight
   );
 
   return estimator({
