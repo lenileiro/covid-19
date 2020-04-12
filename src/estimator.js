@@ -20,19 +20,19 @@ const getTimeDuration = (periodType, timeToElapse) => {
 };
 
 const estimateCurrentlyInfected = (input) => {
-    const severeImpact = {};
-    const impact = {};
-    const { data, data: { reportedCases } } = input;
-  
-    impact.currentlyInfected = reportedCases * 10;
-  
-    severeImpact.currentlyInfected = reportedCases * 50;
-  
-    return {
-      data,
-      impact,
-      severeImpact
-    };
+  const severeImpact = {};
+  const impact = {};
+  const { data, data: { reportedCases } } = input;
+
+  impact.currentlyInfected = reportedCases * 10;
+
+  severeImpact.currentlyInfected = reportedCases * 50;
+
+  return {
+    data,
+    impact,
+    severeImpact
+  };
 };
 
 const estimateProjectedInfections = (input) => {
@@ -51,13 +51,48 @@ const estimateProjectedInfections = (input) => {
   };
 };
 
+const estimateSevereCases = (input) => {
+  const {
+    data, impact, severeImpact
+  } = input;
+
+  impact.severeCasesByRequestedTime = 0.15 * impact.infectionsByRequestedTime;
+  severeImpact.severeCasesByRequestedTime = 0.15 * severeImpact.infectionsByRequestedTime;
+
+  return {
+    data,
+    impact,
+    severeImpact
+  };
+};
+
+const estimateBedSpaceAvailability = (input) => {
+  const {
+    data, impact, severeImpact, data: { totalHospitalBeds }
+  } = input;
+
+  const availablebeds = 0.35 * totalHospitalBeds;
+
+  impact.hospitalBedsByRequestedTime = availablebeds - impact.severeCasesByRequestedTime;
+  const total = availablebeds - severeImpact.severeCasesByRequestedTime;
+  severeImpact.hospitalBedsByRequestedTime = total;
+  return {
+    data,
+    impact,
+    severeImpact
+  };
+};
 
 const covid19ImpactEstimator = (data) => {
   const estimator = chain(
 
     // challenge 1
     estimateCurrentlyInfected,
-    estimateProjectedInfections
+    estimateProjectedInfections,
+
+    // challenge 2
+    estimateSevereCases,
+    estimateBedSpaceAvailability
   );
 
   return estimator({
