@@ -73,9 +73,9 @@ const estimateBedSpaceAvailability = (input) => {
 
   const availablebeds = 0.35 * totalHospitalBeds;
 
-  impact.hospitalBedsByRequestedTime = availablebeds - impact.severeCasesByRequestedTime;
+  impact.hospitalBedsByRequestedTime = Math.ceil(availablebeds - impact.severeCasesByRequestedTime);
   const total = availablebeds - severeImpact.severeCasesByRequestedTime;
-  severeImpact.hospitalBedsByRequestedTime = total;
+  severeImpact.hospitalBedsByRequestedTime = Math.ceil(total);
   return {
     data,
     impact,
