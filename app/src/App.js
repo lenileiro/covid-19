@@ -1,6 +1,8 @@
 import React from 'react'
 import './app.css';
 function App(_props) {
-    return <h1>Hello world</h1>;
+    return <div class="text-red-600">
+    Hello world
+  </div>;
 }
 export default App;
