@@ -4,3 +4,4 @@ public/*.br
 public/*.js
 public/*.map
 .firebase
+firebase-debug.log
