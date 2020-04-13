@@ -15,7 +15,7 @@ app.get('*.js', (req, res, next) => {
 
 app.get('**', (req, res) => {
     const html = renderToString(<App />)
-    res.set('Cache-Control', 'public, max-age=600, s-maxage=1200', 'Content-Encoding', 'brotli')
+    // res.set('Cache-Control', 'public, max-age=600, s-maxage=1200', 'Content-Encoding', 'brotli')
     res.send(html)
 })
 
